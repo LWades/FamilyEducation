@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>站内信</title>
+</head>
+<script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+<body>
+<switch name="msg_type">
+    <case value="3">
+        {$msg_dtl.msg_title}<br>
+        {$msg_dtl.msg_content}<br>
+        学生姓名：{$msg_dtl.stu_name} &nbsp;&nbsp;性别：{$msg_dtl.stu_sex}<br>
+        学校：{$msg_dtl.stu_school}
+        学历：{$msg_dtl.stu_education}&nbsp;&nbsp;
+        年级：{$msg_dtl.stu_grade}<br>
+        家教地址：{$msg_dtl.stu_address}&nbsp;&nbsp;
+        简介：{$msg_dtl.stu_introduce}<br>
+        <br>
+        <switch name="msg_accept">
+            <?php case "0": ?>
+            <a name="agree" id="agree">同意请求</a>
+            <a name="disagree" id="disagree">不同意请求</a>
+            <?php break;?>
+            <?php case "1": ?><span>已同意</span><?php break;?>
+            <?php case "2": ?><span>已拒绝</span><?php break;?>
+        </switch>
+
+    </case>
+    <case value="1">
+        {$msg_dtl.msg_title}<br>
+        {$msg_dtl.msg_content}<br>
+    </case>
+    <case value="4">
+        {$msg_dtl.msg_title}<br>
+        {$msg_dtl.msg_content}<br><br>
+        <switch name="msg_accept">
+            <?php case "0": ?>
+            <a name="accept" id="accept">同意请求</a>
+            <a name="refuse" id="refuse">不同意请求</a>
+            <?php break;?>
+            <?php case "1": ?><span>已同意</span><?php break;?>
+            <?php case "2": ?><span>已拒绝</span><?php break;?>
+        </switch>
+    </case>
+    <case value="5">
+        {$msg_dtl.msg_title}<br>
+        {$msg_dtl.msg_content}<br><br>
+        <switch name="msg_accept">
+            <?php case "0": ?>
+            <a href="{:U('Home/Teacher/acceptFace', array('msg_id'=>$msg_dtl['msg_id']))}">接受面试邀请</a>
+            <a href="{:U('Home/Teacher/refuseFace', array('msg_id'=>$msg_dtl['msg_id']))}">拒绝面试邀请</a>
+            <?php break;?>
+            <?php case "1": ?>
+            <span>已同意</span>
+            <a href="{:U('Home/Common/videoCall', array('msg_id'=>$msg_dtl['msg_id']))}" target="_blank">进入面试模块</a>
+            <?php break;?>
+            <?php case "2": ?>
+            <span>已拒绝</span>
+            <?php break;?>
+        </switch>
+    </case>
+</switch>
+<br>
+<a href="{:U('Home/Teacher/tecMsg')}">返回</a>
+<script>
+    $(document).ready(function () {
+        var msg_id = "{$msg_dtl.msg_id}"
+        $("#agree").click(function () {
+            if(confirm("确认同意家教请求并生成合同吗？")){
+                $(location).attr('href', 'https://www.fangzhouf.org/Home/Teacher/agreeRequest?msg_id=' + msg_id);
+            }
+        });
+
+        $("#disagree").click(function () {
+            if (confirm("确认拒绝这次请求吗？")){
+                $(location).attr('href', 'https://www.fangzhouf.org/Home/Teacher/refuseRequest?msg_id=' + msg_id);
+            }
+        });
+
+        $("#accept").click(function () {
+            if (confirm("确认接受吗？"))
+                $(location).attr('href', 'https://www.fangzhouf.org/Home/Teacher/acceptAgreement?msg_id=' + msg_id);
+        })
+
+        $("#refuse").click(function () {
+            if (confirm("确认拒绝吗？"))
+                $(location).attr('href', 'https://www.fangzhouf.org/Home/Teacher/refuseAgreement?msg_id=' + msg_id);
+        })
+    })
+</script>
+</body>
+</html>

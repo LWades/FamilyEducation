@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>完善个人信息</title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<h1>完善个人信息</h1>
+<form name="fill_info" id="fill_info" action="{:U('Home/Teacher/fillInfo')}" method="post" enctype="multipart/form-data">
+    真实姓名<input type="text" name="tec_name" id="tec_name"><br>
+    性别
+    <input type="radio" name="tec_type" id="tec_type1" value="male">男
+    <input type="radio" name="tec_type" id="tec_type2" value="female">女<br>
+    学历
+    <select name="tec_education" id="tec_education">
+        <option id="tec_edc1" value="1" selected>本科</option>
+        <option id="tec_edc2" value="2">研究生</option>
+    </select>
+    <br>
+    年级
+    <select name="tec_grade" id="tec_grade">
+        <option value="1">一年级</option>
+        <option value="2">二年级</option>
+        <option value="3">三年级</option>
+        <option id="tec_grade4" value="4">四年级</option>
+    </select>
+    <br>
+    院系<input type="text" name="tec_department" id="tec_department"><br>
+    专业<input type="text" name="tec_profession" id="tec_profession"><br>
+    附件<input type="file" name="tec_resume" id="tec_resume"><br>
+    个人简介<br>
+    <textarea name="tec_introduce" id="tec_introduce"></textarea><br>
+    <input type="submit" value="保存">
+</form>
+<script>
+    $(document).ready(function () {
+        $("#tec_education").change(function () {
+//            alert($(this).children('option:selected').val());
+            if (2 == $(this).children('option:selected').val())
+                $("#tec_grade4").hide();
+            else
+                $("#tec_grade4").show();
+        });
+    });
+</script>
+</body>
+</html>

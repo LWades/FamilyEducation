@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>完善个人信息</title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<h1>完善个人信息</h1>
+<form name="fill_info" id="fill_info" action="{:U('Home/Student/fillInfo')}" method="post">
+    真实姓名<input type="text" name="stu_name" id="stu_name"><br>
+    性别
+    <input type="radio" name="stu_type" id="stu_type1" value="male">男
+    <input type="radio" name="stu_type" id="stu_type2" value="female">女<br>
+    学校<input type="text" name="stu_school" id="stu_school"><br>
+    教育情况
+    <select name="stu_education" id="stu_education">
+        <option id="stu_edc1" value="1" selected>小学</option>
+        <option id="stu_edc2" value="2">初中</option>
+        <option id="stu_edc3" value="3">高中</option>
+    </select>
+    <br>
+    年级
+    <select name="stu_grade" id="stu_grade">
+        <option value="1">一年级</option>
+        <option value="2">二年级</option>
+        <option value="3">三年级</option>
+        <option id="stu_grade4" value="4">四年级</option>
+        <option id="stu_grade5" value="5">五年级</option>
+        <option id="stu_grade6" value="6">六年级</option>
+    </select>
+    <br>
+    家庭住址<input type="text" name="stu_address" id="stu_address"><br>
+    个人简介<br>
+    <textarea name="stu_introduce" id="stu_introduce"></textarea>
+    <input type="submit" value="保存">
+</form>
+<script>
+    $(document).ready(function () {
+        $("#stu_education").change(function () {
+//            alert($(this).children('option:selected').val());
+            if (1 == $(this).children('option:selected').val()) {
+                $("#stu_grade4").show();
+                $("#stu_grade5").show();
+                $("#stu_grade6").show();
+            }else {
+                $("#stu_grade4").hide();
+                $("#stu_grade5").hide();
+                $("#stu_grade6").hide();
+            }
+        });
+    });
+</script>
+</body>
+</html>

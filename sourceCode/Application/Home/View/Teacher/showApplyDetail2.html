@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>申请详情</title>
+</head>
+<script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+<body>
+<h1>申请详情</h1>
+申请标题：{$apl_detail.apl_title}<br>
+申请课程：{$apl_detail.apl_course}<br>
+薪资：{$apl_detail.apl_salary}<br>
+授课频率：{$apl_detail.apl_frequency}<br>
+学生：{$apl_detail.stu_name}<br>
+性别：{$apl_detail.stu_sex}<br>
+所在学校：{$apl_detail.stu_school}<br>
+学历：{$apl_detail.stu_education}<br>
+年级：{$apl_detail.stu_grade}<br>
+家教地址：{$apl_detail.stu_address}<br>
+学生简介：{$apl_detail.stu_introduce}<br>
+发布日期：{$apl_detail.apl_date}<br><br>
+<a name="want" id="want">我想当他/她的老师</a>
+<if condition="isLogin()">
+    <span class="is_login" hidden>1</span>
+    <else/>
+    <span class="is_login" hidden>0</span>
+</if>
+<script>
+    $(document).ready(function () {
+        var is_login = $(".is_login").text();
+        $("#want").click(function () {
+            if (1 == is_login){
+                if(confirm("确认应聘吗？")){
+                    var stu_id = "{$apl_detail.apl_user_id}";
+                    var address = 'https://www.fangzhouf.org/Home/Teacher/makeRequest?stu_id=' + stu_id;
+                    $(location).attr('href', address);
+                }
+            } else{
+                if(confirm("您需要登录, 现在登录吗？"))
+                    $(location).attr('href', 'https://www.fangzhouf.org/Home/LoginRegister/login');
+            }
+        });
+    })
+</script>
+</body>
+</html>

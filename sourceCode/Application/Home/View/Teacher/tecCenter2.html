@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+</head>
+<script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+<body>
+<a href="{:U('Home/Teacher/teacher')}">返回</a>
+<h3>个人信息</h3>
+<div id="info_div">
+    真实姓名：{$tec_info.tec_name}&nbsp;&nbsp;
+    性别：{$tec_info.tec_sex}<br>
+    学历：{$tec_info.tec_education}&nbsp;&nbsp;
+    年级：{$tec_info.tec_grade}<br>
+    学院：{$tec_info.tec_department}&nbsp;&nbsp;
+    专业：{$tec_info.tec_profession}<br>
+    <a id="resume">附件</a><br>
+    简介：{$tec_info.tec_introduce}<br>
+    <span id="edit_info">编辑</span>
+</div>
+<div id="edit_info_div" style="display:none;">
+    <form id="edit_info_form" name="edit_info_form" action="{:U('Home/Teacher/editInfo')}" method="post" enctype="multipart/form-data">
+        真实姓名：<input type="text" id="tec_name" name="tec_name" value="{$tec_info.tec_name}"><br>
+        性别
+        <input type="radio" name="tec_sex" id="tec_sex1" value="male">男
+        <input type="radio" name="tec_sex" id="tec_sex2" value="female">女<br>
+        学历
+        <select name="tec_education" id="tec_education">
+            <option id="tec_edc1" value="1">本科</option>
+            <option id="tec_edc2" value="2">研究生</option>
+        </select>
+        <br>
+        年级
+        <select name="tec_grade" id="tec_grade">
+            <option id="tec_grade1" value="1">一年级</option>
+            <option id="tec_grade2" value="2">二年级</option>
+            <option id="tec_grade3" value="3">三年级</option>
+            <option id="tec_grade4" value="4">四年级</option>
+        </select>
+        <br>
+        院系<input type="text" name="tec_department" id="tec_department" value="{$tec_info.tec_department}"><br>
+        专业<input type="text" name="tec_profession" id="tec_profession" value="{$tec_info.tec_profession}"><br>
+        附件<input type="file" name="tec_resume" id="tec_resume"><br>
+        简介：<textarea id="tec_introduce" name="tec_introduce">{$tec_info.tec_introduce}</textarea><br>
+        <button id="save_info" type="submit">保存</button>
+    </form>
+</div>
+<h3>申请信息</h3>
+<switch name="is_apply">
+    <case value="0">
+        当前的申请<br>
+        <a href="{:U('Home/Teacher/myApply')}">{$apl_info.apl_title}</a>
+        <a name="cancel_apply" id="cancel_apply">取消申请</a>
+    </case>
+    <case value="1">
+        还未申请家教，
+        <a href="{:U('Home/Teacher/submitApply')}">去申请</a>
+    </case>
+</switch>
+<h3>请求信息</h3>
+<switch name="is_request">
+    <case value="1">
+        <table>
+            <tr>
+                <td>标题</td>
+                <td>学生</td>
+                <td>请求时间</td>
+                <td>状态</td>
+            </tr>
+            <volist name="request" id="r">
+                <tr>
+                    <td>{$r.apl_title}</td>
+                    <td>{$r.stu_name}</td>
+                    <td>{$r.req_time}</td>
+                    <td>{$r.req_status}</td>
+                    <td><a name="cancel_request" id="cancel_request" req_id="{$r.req_id}">取消</a></td>
+                </tr>
+            </volist>
+        </table>
+    </case>
+    <case value="0">
+        没有家教请求，
+        <a href="{:U('Home/Teacher/teacher')}">去看看</a>
+    </case>
+</switch>
+
+<h3>站内信</h3>
+<a href="{:U('Home/Teacher/tecMsg')}">阅读站内信</a>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#edit_info_div").hide();
+        $("#edit_info").click(function () {
+            $("#info_div").hide();
+            $("#edit_info_div").show();
+        })
+
+        $("#tec_education").change(function () {
+            if (2 == $(this).children('option:selected').val())
+                $("#tec_grade4").hide();
+            else
+                $("#tec_grade4").show();
+        });
+
+        //编辑时先给元素设置当前的值
+        var sex = "{$tec_info.tec_sex}";
+        if (sex == "male")
+            $("#tec_sex1").attr("checked", true);
+        else
+            $("#tec_sex2").attr("checked", true);
+
+        var education = "{$tec_info.tec_education}";
+        if ("1" == education)
+            $("#tec_edc1").attr("selected", true);
+        else
+            $("#tec_edc2").attr("selected", true);
+
+        var grade = "{$tec_info.tec_grade}"
+        switch (grade){
+            case "1":
+                $("#tec_grade1").attr("selected", true);
+                break;
+            case "2":
+                $("#tec_grade2").attr("selected", true);
+                break;
+            case "3":
+                $("#tec_grade3").attr("selected", true);
+                break;
+            case "4":
+                $("#tec_grade4").attr("selected", true);
+                break;
+            default:
+                break;
+        }
+
+        $("#cancel_apply").click(function () {
+            if(confirm("确认取消此申请吗？")){
+                $(location).attr('href', 'https://www.fangzhouf.org/Home/Teacher/deleteApply');
+            }
+        });
+
+        $("a[name='cancel_request']").click(function () {
+            if (confirm("确认取消此请求吗？")){
+                var req_id = $(this).attr('req_id');
+                var address = 'https://www.fangzhouf.org/Home/Teacher/deleteRequest?req_id=' + req_id;
+                $(location).attr('href', address);
+            }
+        })
+
+        var file = "{$tec_info.tec_resume}";
+        $("#resume").attr({
+            "href" : "https://www.fangzhouf.org/file/" + file
+        });
+    })
+</script>
+</html>

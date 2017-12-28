@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
+    <link href="__PUBLIC__/css/button.css?ver=<?php echo time(); ?>" rel='stylesheet' type='text/css' />
+</head>
+<body>
+<a href="{:U('Home/Index/homePage')}">HOME</a><br>
+<h1>登录</h1>
+<form name="login_form" id="login_form" action="{:U('Home/LoginRegister/login')}" method="post">
+    用户名<input type="text" name="user_name" id="user_name"><br>
+    密码<input type="password" name="user_pwd" id="user_pwd"><br>
+    <input type="submit" value="GO">
+    <!--<a href="javascript:void(0);" class="button" onclick="document.login_form.submit()">GO</a>-->
+    <br>
+    <a href="{:U('Home/LoginRegister/register')}" >还没有账号?赶快注册一个吧</a>
+</form>
+</body>
+</html>

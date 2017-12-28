@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>家教申请</title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<h1>申请家教</h1>
+<form name="tec_apply_form" id="tec_apply_form" action="" method="post">
+    申请标题<input type="text" name="apl_title" id="apl_title"><br>
+    申请课程(擅长程度顺序)<br>
+    <input type="text" name="apl_course" id="apl_course">
+    <select name="link1" id="link1">
+        <option name="link11" id="link11" value=">">></option>
+        <option name="link12" id="link12" value="=">=</option>
+    </select>
+    <input type="text" name="apl_course2" id="apl_course2">
+    <select name="link2" id="link2">
+        <option name="link21" id="link21" value=">">></option>
+        <option name="link22" id="link22" value="=">=</option>
+    </select>
+    <input type="text" name="apl_course3" id="apl_course3">
+    <br>
+    申请描述
+    <br>
+    <textarea name="apl_description"></textarea>
+    <input type="submit" value="提交申请">
+</form>
+<script>
+    $(document).ready(function () {
+        $("#tec_apply_form").bind("submit", function () {
+            var link1 = ($("#apl_course2").val() != "") ? $("#link1").val() : "";
+
+            var link2 = ($("#apl_course3").val() != "" && $("#apl_course2").val() != "") ? $("#link2").val() : "";
+
+            var result = $("#apl_course").val() + link1 + $("#apl_course2").val() + link2 + $("#apl_course3").val();
+
+            $("#apl_course").val(result);
+        })
+    })
+</script>
+</body>
+</html>

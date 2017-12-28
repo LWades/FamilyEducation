@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师主页</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/Teacher/main.css?ver=<?php echo time(); ?>">
+    <link rel="stylesheet" href="__PUBLIC__/css/Teacher/animate.min.css">
+</head>
+<script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/jquery.waypoints.min.js"></script>
+<script src="__PUBLIC__/js/Teacher/main.js"></script>
+<body>
+<h3>欢迎来到教师主页</h3><br>
+<a href="{:U('Home/Index/homePage')}">HOME</a><br>
+<switch name="is_login">
+    <case value="0">
+        <a href="{:U('Home/LoginRegister/login')}">登录</a>
+    </case>
+    <case value="1">
+        {$name}
+        <switch name="user_type">
+            <?php case "1": ?>老师<?php break;?>
+            <?php case "2": ?>同学<?php break;?>
+        </switch>
+        ，您好
+        <eq name="is_info" value="0">
+            <a id="fill_info_href" href="{:U('Home/Teacher/fillInfo')}">去完善一下个人信息吧</a><br>
+        </eq>
+        <eq name="is_info" value="1">
+            <a id="person_center" href="{:U('Home/Teacher/tecCenter')}">个人中心</a><br>
+        </eq>
+        <!--<a href="">个人中心</a>-->
+        <a href="https://www.fangzhouf.org/Home/LoginRegister/quitLogin">退出登录</a><br>
+    </case>
+</switch>
+<div class="row no-gutter">
+    <volist name="stu_apply" id="sta">
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="{:U('Home/Teacher/showApplyDetail', array('id'=>$sta['apl_user_id']))}" class="work-box">
+                <!--<img src="images/work-4.jpg" alt="">-->
+                <div style="width:440px;height: 258px">
+                    {$sta.apl_title}<br>
+                    {$sta.apl_course}<br>
+                    {$sta.apl_date}<br>
+                </div>
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h4>查看详情</h4>
+                        <p><i class="fa fa-search-plus fa-2x"></i></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </volist>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var type = "{$user_type}";
+        if (1 == type){
+            $("#fill_info_href").attr({
+                "href" : "https://www.fangzhouf.org/Home/Teacher/fillInfo.html"
+            });
+
+            $("#person_center").attr({
+                "href" : "https://www.fangzhouf.org/Home/Teacher/tecCenter.html"
+            });
+        }
+        else{
+            $("#fill_info_href").attr({
+                "href" : "https://www.fangzhouf.org/Home/Student/fillInfo.html"
+            });
+
+            $("#person_center").attr({
+                "href" : "https://www.fangzhouf.org/Home/Student/stuCenter.html"
+            });
+        }
+    })
+</script>
+</body>
+</html>

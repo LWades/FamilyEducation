@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>站内信</title>
+</head>
+<body>
+<h1>学生站内信</h1>
+<br>
+<empty name="stu_msg">
+    您的收件箱中没有站内信
+    <else/>
+    <table>
+        <tr>
+            <td>消息标题</td>
+            <td>消息类型</td>
+            <td>时间</td>
+        </tr>
+        <volist name="stu_msg" id="m">
+            <tr>
+                <td><a href="{:U('Home/Student/stuMsgContent', array('msg_id'=>$m['msg_id']))}">{$m.msg_title}</a></td>
+                <td>{$m.msg_type}</td>
+                <td>{$m.msg_time}</td>
+            </tr>
+        </volist>
+    </table>
+</empty>
+<br>
+<a href="{:U('Home/Student/stuCenter')}">返回</a>
+</body>
+</html>
